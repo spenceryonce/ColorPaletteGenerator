@@ -1,0 +1,193 @@
+<!--Color pallete generator app-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Color Palette Generator</title>
+    <!--Boostrap CDN link-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--Bootstrap js cdn link-->
+    <!--Font awesome icons link-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!--List of color palletes containg 5 different colors each-->
+    <!--arranged in a grid-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Color Palette Generator</h1>
+            </div>
+        </div>
+        <div class="row">
+            <!--Generate New Color Pallete button-->
+            <div class="col-md-12">
+                <button id="generate-new-palette" class="btn btn-primary" onclick="generateColorpalette()">Generate New Palette</button>
+            </div>
+        </div>
+        <div class="row">
+            <!--Create your own color pallete from 5 colors-->
+            <div class="col-md-12">
+                <form id="color-form" class="form-inline" method="POST" action="/add">
+                    <!--Name of Color Pallete-->
+                    <div class="form-group">
+                        <label for="name">Name of Color Palette:</label>
+                        <input type="text" class="form-control" id="name" placeholder="Color Palette Name" name="name">
+                    </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                    <div class="form-group">
+                        <label for="color1">Color 1:</label>
+                        <input type="color" class="form-control form-control-lg inputcolor" id="color1" name="color1">
+                    </div>
+            </div>
+            <div class="col">
+                    <div class="form-group">
+                        <label for="color2">Color 2:</label>
+                        <input type="color" class="form-control form-control-lg inputcolor" id="color2" name="color2">
+                    </div>
+            </div>
+            <div class="col">
+                    <div class="form-group">
+                        <label for="color3">Color 3:</label>
+                        <input type="color" class="form-control form-control-lg inputcolor" id="color3" name="color3">
+                    </div>
+            </div>
+            <div class="col">
+                    <div class="form-group">
+                        <label for="color4">Color 4:</label>
+                        <input type="color" class="form-control form-control-lg inputcolor" id="color4" name="color4">
+                    </div>
+            </div>
+            <div class="col">
+                    <div class="form-group">
+                        <label for="color5">Color 5:</label>
+                        <input type="color" class="form-control form-control-lg inputcolor" id="color5" name="color5">
+                    </div>
+            </div>
+            <div class="col">
+        
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+            <!--Color Palette-->  
+        {% for c in colorpalettes %}
+            <div class="row colorpalette shadow p-3 mb-5 bg-white rounded">
+                <div class="col-12">
+                    <div style="
+                        position: absolute;
+                        right: 0;
+                    ">ID:{{c.id}}</div>
+                    <h2>{{c.name}}</h2>
+                </div>
+                <div class="col">
+                    <div class="color-palette">
+                        <div class="color-palette-box rounded" style="background-color: {{c.color1}}"></div>
+                        <!-- Color 1 label undernearth color-palette-box -->
+                        <div class="color-palette-label">{{c.color1}}</div>
+                        <!--Download button with icon-->
+                        <a href="/colorpalette/download/{{c.id}}" download="/colorpalette/download/{{c.id}}" class="btn btn-primary">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="color-palette">
+                        <div class="color-palette-box rounded" style="background-color: {{c.color2}}"></div>
+                        <!-- Color 2 label undernearth color-palette-box -->
+                        <div class="color-palette-label">{{c.color2}}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="color-palette">
+                        <div class="color-palette-box rounded" style="background-color: {{c.color3}}"></div>
+                        <!-- Color 3 label undernearth color-palette-box -->
+                        <div class="color-palette-label">{{c.color3}}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="color-palette">
+                        <div class="color-palette-box rounded" style="background-color: {{c.color4}}"></div>
+                        <!-- Color 4 label undernearth color-palette-box -->
+                        <div class="color-palette-label">{{c.color4}}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="color-palette">
+                        <div class="color-palette-box rounded" style="background-color: {{c.color5}}"></div>
+                        <!-- Color 5 label undernearth color-palette-box -->
+                        <div class="color-palette-label">{{c.color5}}</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+<!--Javascript-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--bootstrap script-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+    //Jquery get generateColorpalette button
+    $('#generate-new-palette').click(function(){
+        generateColorpalette();
+    });
+    //generate color palette function
+    function generateColorpalette(){
+        //create empty color array
+        var colors = [];
+        //loop 5 times to get 5 random colors
+        for(var i = 0; i < 5; i++){
+            //get random color
+            var color = getRandomColor();
+            //push color to colors array
+            colors.push(color);
+        }
+        //generate random name for color palette
+        var name = getRandomName();
+        //set name to color palette name input
+        $('#name').val(name);
+        //set colors to color inputs
+        $('#color1').val(colors[0]);
+        $('#color2').val(colors[1]);
+        $('#color3').val(colors[2]);
+        $('#color4').val(colors[3]);
+        $('#color5').val(colors[4]);
+        
+    }
+
+    //create random name function based on the current time
+    function getRandomName(){
+        //get current time
+        var time = new Date();
+        //get current time in milliseconds
+        var timeInMilliseconds = time.getTime();
+        //convert milliseconds to string
+        var timeString = timeInMilliseconds.toString();
+        //get last 6 characters of string
+        var name = timeString.substr(timeString.length - 6);
+        //return name
+        return name;
+    }
+
+
+
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
+
+</script>
+</body>
+</html>

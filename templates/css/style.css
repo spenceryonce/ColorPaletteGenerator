@@ -1,0 +1,15 @@
+.color-palette-box {
+    padding: 15px;
+    display: inline-block;
+    margin: 0 15px 15px 0;
+    width: 100px;
+    height: 100px;
+}
+
+.colorpalette{
+    background-color:rgb(241, 241, 241);
+    box-sizing: border-box;
+}
+.colorpalette:hover{
+    outline: 2px solid rgb(0, 140, 255);
+}
